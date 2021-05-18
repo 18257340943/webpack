@@ -30,7 +30,7 @@ const commonCssLoader = [
 ];
 
 module.exports = {
-  entry: './src/main.js',
+  entry: "./src/index.tsx",
   output: {
     filename: `[name]${devMode ? '' : '.[contenthash:10]'}.js`,
     path: resolve(__dirname, '../dist'),
@@ -76,11 +76,13 @@ module.exports = {
               outputPath: 'media'
             }
           },
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-          }
+          { test: /\.(tsx|ts)?$/, loader: "awesome-typescript-loader" },
+          { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+          // {
+          //   test: /\.js$/,
+          //   exclude: /node_modules/,
+          //   loader: 'babel-loader',
+          // }
         ]
       }
     ]
@@ -99,5 +101,10 @@ module.exports = {
     alias: {
       '@': srcDir
     },
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  }
 };
